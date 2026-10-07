@@ -1,0 +1,30 @@
+services:
+  mariadb:
+    image: docker.io/mariadb:latest
+    container_name: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb-spring:/var/lib/mysql
+
+#  mariadb13:
+#    image: docker.io/mariadb:13
+#    container_name: mariadb13
+#    environment:
+#      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+#      MARIADB_USER: ${MARIADB_USER}
+#      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+#      MARIADB_DATABASE: ${MARIADB_DATABASE}
+#    ports:
+#      - "3308:3306"
+#    volumes:
+#      - mariadb-spring2:/var/lib/mysql
+
+volumes:
+  mariadb-spring:
+#  mariadb-spring2:

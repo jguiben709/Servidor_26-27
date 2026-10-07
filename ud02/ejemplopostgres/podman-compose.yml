@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: docker.io/postgres:latest
+    container_name: bd-dwes
+    environment:
+      POSTGRES_DB: catalogo
+      POSTGRES_USER: dwes
+      POSTGRES_PASSWORD: dwes
+    ports: ["5432:5432"]
+    volumes: [datos-dwes:/var/lib/postgresql]
+
+volumes:
+  datos-dwes:
