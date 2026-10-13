@@ -15,10 +15,7 @@ public class CafeController {
     }
 
     @GetMapping("/cafe")
-    public String cafe() {
-
-        return cafeService.getAllCafes();
-    }
+    public String cafe() { return cafeService.getAllCafes(); }
 
     @GetMapping("/cafe/{id}")
     public String cafe(@PathVariable Long id) {
