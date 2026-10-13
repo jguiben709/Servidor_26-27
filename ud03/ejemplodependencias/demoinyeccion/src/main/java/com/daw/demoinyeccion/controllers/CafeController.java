@@ -16,6 +16,7 @@ public class CafeController {
 
     @GetMapping("/cafe")
     public String cafe() {
+
         return cafeService.getAllCafes();
     }
 
