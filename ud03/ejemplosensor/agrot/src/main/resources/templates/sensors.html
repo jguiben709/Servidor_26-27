@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Sensors</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>NAME</th>
+                <th>TYPE</th>
+                <th>MODEL</th>
+                <th>ESTADO</th>
+                <th>LATITUD</th>
+                <th>LONGITUD</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="sensor : ${sensors}">
+                <td th:text="${sensor.getName()}"></td>
+                <td th:text="${sensor.getTipo_sensor()}"></td>
+                <td th:text="${sensor.getModel()}"></td>
+                <td th:text="${sensor.getEstado()}"></td>
+                <td th:text="${sensor.getLatitud()}"></td>
+                <td th:text="${sensor.getLongitud()}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
