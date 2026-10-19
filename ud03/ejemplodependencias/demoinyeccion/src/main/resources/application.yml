@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: demoinyeccion
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.daw.demoinyeccion: DEBUG
+
+cafe:
+  idioma: es
+
+
+
+
