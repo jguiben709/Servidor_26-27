@@ -36,4 +36,9 @@ public class SensorServiceImpl implements SensorService {
     public void createSensor(Sensor sensor) {
         sensorRepository.save(sensor);
     }
+
+    @Override
+    public void deleteSensorById(Long id) {
+        sensorRepository.deleteById(id);
+    }
 }

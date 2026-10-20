@@ -10,4 +10,5 @@ public interface SensorService {
     Sensor getSensorById(Long id);
     List<Sensor> getAllSensorsTemperatura();
     void createSensor(Sensor sensor);
+    void deleteSensorById(Long id);
 }
