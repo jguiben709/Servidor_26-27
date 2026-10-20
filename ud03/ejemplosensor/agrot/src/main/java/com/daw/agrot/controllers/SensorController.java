@@ -5,6 +5,7 @@ import com.daw.agrot.services.SensorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -21,11 +22,23 @@ public class SensorController {
     public String getAllSensors(Model model) {
         //Obtener los sensores
         var sensors = sensorService.getAllSensors();
-
         //Pasárselos a la vista
         model.addAttribute("sensors", sensors);
-
         return "sensors";
+    }
+
+    @GetMapping("/temperatura")
+    public String getAllSensorsTemperatura(Model model) {
+        var sensors = sensorService.getAllSensorsTemperatura();
+        model.addAttribute("sensors", sensors);
+        return "sensors";
+    }
+
+    @GetMapping("/{id}")
+    public String getSensorById(@PathVariable Long id, Model model) {
+        var sensor = sensorService.getSensorById(id);
+        model.addAttribute("sensor", sensor);
+        return "sensor";
     }
 
 
