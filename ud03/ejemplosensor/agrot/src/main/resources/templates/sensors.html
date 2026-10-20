@@ -21,7 +21,7 @@
         <tbody>
             <tr th:each="sensor : ${sensors}">
                 <td th:text="${sensor.getName()}"></td>
-                <td th:text="${sensor.getTipo_sensor()}"></td>
+                <td th:text="${sensor.getTipo()}"></td>
                 <td th:text="${sensor.getModel()}"></td>
                 <td th:text="${sensor.getEstado()}"></td>
                 <td th:text="${sensor.getLatitud()}"></td>

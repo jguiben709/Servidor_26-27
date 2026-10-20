@@ -8,4 +8,5 @@ public interface SensorService {
 
     List<Sensor> getAllSensors();
     Sensor getSensorById(Long id);
+    List<Sensor> getAllSensorsTemperatura();
 }

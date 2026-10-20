@@ -1,6 +1,7 @@
 package com.daw.agrot.services;
 
 import com.daw.agrot.entities.Sensor;
+import com.daw.agrot.entities.TipoSensor;
 import com.daw.agrot.repositories.SensorRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,10 @@ public class SensorServiceImpl implements SensorService {
     @Override
     public Sensor getSensorById(Long id) {
         return sensorRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Sensor> getAllSensorsTemperatura() {
+        return sensorRepository.findAllByTipoEquals(TipoSensor.TEMPERATURA);
     }
 }

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Entity(name = "sensors")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,11 +20,18 @@ public class Sensor {
     private String model;
 
     @Enumerated(EnumType.STRING)
-    private TipoSensor tipo_sensor;
+    @Column(nullable = false, name = "tipo_sensor")
+    private TipoSensor tipo;
 
-    private String unidad_medida;
+    @Column(name = "unidad_medida")
+    private String unidadMedida;
+
     private String estado;
+
+    @Column(nullable = true)
     private Double latitud;
+
+    @Column(nullable = true)
     private Double longitud;
 
 
