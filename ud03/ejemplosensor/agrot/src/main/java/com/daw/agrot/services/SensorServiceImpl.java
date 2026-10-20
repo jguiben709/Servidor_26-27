@@ -31,4 +31,9 @@ public class SensorServiceImpl implements SensorService {
     public List<Sensor> getAllSensorsTemperatura() {
         return sensorRepository.findAllByTipoEquals(TipoSensor.TEMPERATURA);
     }
+
+    @Override
+    public void createSensor(Sensor sensor) {
+        sensorRepository.save(sensor);
+    }
 }
