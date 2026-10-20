@@ -1,6 +1,7 @@
 package com.daw.agrot.controllers;
 
 
+import com.daw.agrot.entities.Sensor;
 import com.daw.agrot.services.SensorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +40,12 @@ public class SensorController {
         var sensor = sensorService.getSensorById(id);
         model.addAttribute("sensor", sensor);
         return "sensor";
+    }
+
+    @GetMapping("/new")
+    public String newSensor(Model model) {
+        model.addAttribute("sensor", new Sensor());
+        return "new-sensor";
     }
 
 
