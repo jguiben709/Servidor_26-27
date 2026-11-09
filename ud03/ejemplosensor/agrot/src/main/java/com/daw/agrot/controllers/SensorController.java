@@ -26,27 +26,28 @@ public class SensorController {
         var sensors = sensorService.getAllSensors();
         //Pasárselos a la vista
         model.addAttribute("sensors", sensors);
-        return "sensors";
+        return "sensores/lista";
     }
 
     @GetMapping("/temperatura")
     public String getAllSensorsTemperatura(Model model) {
         var sensors = sensorService.getAllSensorsTemperatura();
         model.addAttribute("sensors", sensors);
-        return "sensors";
+        model.addAttribute("titulo", "Sensores de Temperatura");
+        return "sensores/lista";
     }
 
     @GetMapping("/{id}")
     public String getSensorById(@PathVariable Long id, Model model) {
         var sensor = sensorService.getSensorById(id);
         model.addAttribute("sensor", sensor);
-        return "sensor";
+        return "sensores/detalle";
     }
 
     @GetMapping("/new")
     public String newSensor(Model model) {
         model.addAttribute("sensor", new Sensor());
-        return "new-sensor";
+        return "sensores/formulario";
     }
 
     @PostMapping()
