@@ -4,8 +4,10 @@ package com.daw.agrot.controllers;
 import com.daw.agrot.entities.Sensor;
 import com.daw.agrot.entities.TipoSensor;
 import com.daw.agrot.services.SensorService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -68,7 +70,12 @@ public class SensorController {
     }
 
     @PostMapping()
-    public String saveSensor(Sensor sensor) {
+    public String saveSensor(@Valid Sensor sensor, BindingResult errors, Model model) {
+        if (errors.hasErrors()) {
+            model.addAttribute("tipos", TipoSensor.values());
+            return "sensores/formulario";
+        }
+
         sensorService.saveSensor(sensor);
         return "redirect:/sensors";
     }
