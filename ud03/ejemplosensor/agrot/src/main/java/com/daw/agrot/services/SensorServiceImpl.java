@@ -27,6 +27,15 @@ public class SensorServiceImpl implements SensorService {
     }
 
     @Override
+    public List<Sensor> getAllSensorsByNameAndTipo(String name, String tipo) {
+        if (tipo.equals("TODOS")) {
+            return sensorRepository.findAllByNameContainingIgnoreCase(name);
+        } else {
+            return sensorRepository.findAllByNameContainingIgnoreCaseAndTipoEquals(name, TipoSensor.valueOf(tipo));
+        }
+    }
+
+    @Override
     public Sensor getSensorById(Long id) {
         return sensorRepository.findById(id).orElse(null);
     }
@@ -38,7 +47,7 @@ public class SensorServiceImpl implements SensorService {
     }
 
     @Override
-    public void createSensor(Sensor sensor) {
+    public void saveSensor(Sensor sensor) {
         sensorRepository.save(sensor);
     }
 

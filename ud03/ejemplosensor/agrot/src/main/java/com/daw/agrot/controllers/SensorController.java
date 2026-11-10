@@ -2,13 +2,11 @@ package com.daw.agrot.controllers;
 
 
 import com.daw.agrot.entities.Sensor;
+import com.daw.agrot.entities.TipoSensor;
 import com.daw.agrot.services.SensorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/sensors")
@@ -21,11 +19,19 @@ public class SensorController {
     }
 
     @GetMapping
-    public String getAllSensors(Model model) {
+    public String getAllSensors(@RequestParam (required = false) String q,
+                                @RequestParam(required = false) String tipo, Model model) {
         //Obtener los sensores
-        var sensors = sensorService.getAllSensors();
+        if (q == null) q = "";
+        if (tipo == null) tipo = "TODOS";
+
+        var sensors = sensorService.getAllSensorsByNameAndTipo(q, tipo);
         //Pasárselos a la vista
         model.addAttribute("sensors", sensors);
+        var tipos = TipoSensor.values();
+        model.addAttribute("tipos", tipos);
+        model.addAttribute("q", q);
+        model.addAttribute("tipo", tipo);
         return "sensores/lista";
     }
 
@@ -46,13 +52,24 @@ public class SensorController {
 
     @GetMapping("/new")
     public String newSensor(Model model) {
+        var tipos = TipoSensor.values();
+        model.addAttribute("tipos", tipos);
         model.addAttribute("sensor", new Sensor());
         return "sensores/formulario";
     }
 
+    @GetMapping("/update/{id}")
+    public String updateSensor(@PathVariable Long id, Model model) {
+        var sensor = sensorService.getSensorById(id);
+        var tipos = TipoSensor.values();
+        model.addAttribute("tipos", tipos);
+        model.addAttribute("sensor", sensor);
+        return "sensores/formulario";
+    }
+
     @PostMapping()
-    public String createSensor(Sensor sensor) {
-        sensorService.createSensor(sensor);
+    public String saveSensor(Sensor sensor) {
+        sensorService.saveSensor(sensor);
         return "redirect:/sensors";
     }
 

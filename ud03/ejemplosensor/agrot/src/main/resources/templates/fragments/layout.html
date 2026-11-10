@@ -95,7 +95,7 @@
 
     <div class="sidebar-heading">Monitorización</div>
     <nav class="nav flex-column">
-      <a class="nav-link" th:classappend="${activo == 'sensores'} ? 'active'" th:href="@{/sensores}" href="#">
+      <a class="nav-link" th:classappend="${activo == 'sensores'} ? 'active'" th:href="@{/sensors}" href="#">
         <i class="bi bi-broadcast"></i> Sensores
       </a>
       <a class="nav-link" th:classappend="${activo == 'lecturas'} ? 'active'" th:href="@{/lecturas}" href="#">
@@ -105,6 +105,19 @@
 
   </div>
 </aside>
+
+<div th:fragment="header-main(titulo)" class="page-header d-flex flex-wrap justify-content-between align-items-end gap-2">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb"><li class="breadcrumb-item active">Panel</li></ol>
+    </nav>
+    <h1 th:text="${titulo}">Panel general</h1>
+  </div>
+  <span class="text-secondary small">
+    <i class="bi bi-clock me-1"></i>Actualizado:
+    <span th:text="${#temporals.format(#temporals.createNow(), 'dd/MM/yyyy HH:mm')}">09/11/2026 19:40</span>
+  </span>
+</div>
 
 
 <!-- ===================== PIE ===================== -->
