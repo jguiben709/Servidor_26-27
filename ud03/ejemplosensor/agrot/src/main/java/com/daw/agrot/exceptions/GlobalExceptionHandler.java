@@ -1,4 +1,4 @@
-package com.daw.agrot.controllers;
+package com.daw.agrot.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;

@@ -37,6 +37,23 @@ public class SensorController {
         return "sensores/lista";
     }
 
+    /**
+     * Buscador desde Javascript por nombre de sensor. Devuelve un fragmento de la tabla de sensores.
+     * @param q
+     * @param model
+     * @return
+     */
+    @GetMapping("/find")
+    public String findAsinc(@RequestParam (required = false) String q, Model model) {
+
+        if (q == null) q = "";
+        var tipo = "TODOS";
+
+        var sensors = sensorService.getAllSensorsByNameAndTipo(q, tipo);
+        model.addAttribute("sensors", sensors);
+        return "sensores/lista :: tabla-sensores";
+    }
+
     @GetMapping("/temperatura")
     public String getAllSensorsTemperatura(Model model) {
         var sensors = sensorService.getAllSensorsTemperatura();

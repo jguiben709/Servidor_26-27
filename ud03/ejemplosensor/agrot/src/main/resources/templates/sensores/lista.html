@@ -12,6 +12,7 @@
         <div th:replace="~{fragments/layout :: header-main('Sensores')}"></div>
 
         <div class="row g-3">
+
             <div class="container mt-3">
                 <div class="card mb-3">
                     <div class="card-body">
@@ -45,7 +46,7 @@
                     </a>
                 </div>
 
-                <table class="table table-striped">
+                <table id="resultados" th:fragment="tabla-sensores" class="table table-striped">
                     <thead>
                     <tr>
                         <th>NOMBRE</th>
@@ -90,6 +91,17 @@
 </div>
 
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+<script>
+    const caja = document.querySelector('#q');
+    caja.addEventListener('input', async () => {
+        //console.log('Buscando...' + caja.value);
+        const respuesta = await fetch('/sensors/find?q=' + encodeURIComponent(caja.value));
+        document.querySelector('#resultados').innerHTML = await respuesta.text(); //Spring
+    });
+</script>
+
+
 </body>
 </html>
 

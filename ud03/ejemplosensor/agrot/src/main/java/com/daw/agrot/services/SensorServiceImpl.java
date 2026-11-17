@@ -1,6 +1,6 @@
 package com.daw.agrot.services;
 
-import com.daw.agrot.controllers.RecursoNoEncontradoException;
+import com.daw.agrot.exceptions.RecursoNoEncontradoException;
 import com.daw.agrot.entities.Sensor;
 import com.daw.agrot.entities.TipoSensor;
 import com.daw.agrot.repositories.SensorRepository;
