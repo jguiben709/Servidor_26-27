@@ -1,5 +1,6 @@
 package com.daw.agrot.services;
 
+import com.daw.agrot.controllers.RecursoNoEncontradoException;
 import com.daw.agrot.entities.Sensor;
 import com.daw.agrot.entities.TipoSensor;
 import com.daw.agrot.repositories.SensorRepository;
@@ -37,7 +38,10 @@ public class SensorServiceImpl implements SensorService {
 
     @Override
     public Sensor getSensorById(Long id) {
-        return sensorRepository.findById(id).orElse(null);
+        return sensorRepository.findById(id)
+                .orElseThrow(() ->
+                        new RecursoNoEncontradoException("Sensor con id " +
+                                id + " no encontrado"));
     }
 
     @Override
