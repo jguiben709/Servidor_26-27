@@ -1,16 +1,4 @@
 <!DOCTYPE html>
-<!--
-  Fragmentos comunes del layout. Uso desde cualquier página:
-
-    <head th:replace="~{fragments/layout :: head('Título de la página')}"></head>
-    <nav  th:replace="~{fragments/layout :: navbar}"></nav>
-    <aside th:replace="~{fragments/layout :: sidebar('sensores')}"></aside>
-    <div  th:replace="~{fragments/layout :: alertas}"></div>
-    <footer th:replace="~{fragments/layout :: footer}"></footer>
-    <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
-
-  El parámetro de sidebar(...) marca qué opción del menú aparece activa.
--->
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <!-- ===================== HEAD ===================== -->
@@ -85,7 +73,7 @@
 
     <div class="sidebar-heading">Explotación</div>
     <nav class="nav flex-column">
-      <a class="nav-link" th:classappend="${activo == 'parcelas'} ? 'active'" th:href="@{/parcelas}" href="#">
+      <a class="nav-link" th:classappend="${activo == 'parcelas'} ? 'active'" th:href="@{/parcels}" href="#">
         <i class="bi bi-grid-3x3-gap"></i> Parcelas
       </a>
       <a class="nav-link" th:classappend="${activo == 'cultivos'} ? 'active'" th:href="@{/cultivos}" href="#">

@@ -2,6 +2,8 @@ package com.daw.agrot.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,13 +19,20 @@ public class Parcela {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
+    @NotBlank(message = "El nombre no puede estar vacío")
+    @Column(nullable = false)
+    private String name;
 
+    @NotBlank(message = "La ubicación no puede estar vacía")
+    @Column(nullable = false)
     private String ubicacion;
 
+    @NotNull(message = "La superficie no puede estar vacía")
+    @Positive(message = "La superficie debe ser mayor que 0")
     private Double superficie;
 
-    private TipoCultivo tipoCultivo;
+    @NotNull(message = "El tipo de cultivo no puede estar vacío")
+    private TipoCultivo tipo;
 
 
 

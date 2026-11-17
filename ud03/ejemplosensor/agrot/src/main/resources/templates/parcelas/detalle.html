@@ -10,20 +10,20 @@
 
     <main class="app-main flex-grow-1 p-3 p-lg-4">
 
-        <div th:replace="~{fragments/layout :: header-main('Detalle del sensor')}"></div>
+        <div th:replace="~{fragments/layout :: header-main('Detalle de la parcela')}"></div>
 
         <div class="row g-3">
 
             <div class="container mt-4">
                 <div class="card mt-3" style="max-width: 320px;">
                     <div class="card-body">
-                        <h4  th:text="${sensor.getName()}" class="card-title"></h4>
-                        <p th:text="${sensor.getModel()}" class="card-subtitle fg-3"></p>
+                        <h4  th:text="${parcela.getName()}" class="card-title"></h4>
+                        <p th:text="${parcela.getTipo()}" class="card-subtitle fg-3"></p>
                         <p class="card-text">
-                            (<span th:text="${sensor.getLatitud()}"></span>,
-                            <span th:text="${sensor.getLongitud()}"></span>)
+                            <span th:text="${parcela.getSuperficie()}"></span> m²
+
                         </p>
-                        <a th:href="@{/sensors}" class="btn-outline theme-primary">Volver atrás</a>
+                        <a th:href="@{/parcels}" class="btn-outline theme-primary">Volver atrás</a>
                     </div>
                 </div>
             </div>
