@@ -30,6 +30,9 @@ public class ParcelaServiceImpl implements ParcelaService {
     @Override
     public List<Parcela> getAllParcelsByNameAndTipo(String name, String tipo) {
         if (tipo.equals("TODOS")) {
+            //return parcelaRepository.findAll().stream()
+            //        .filter(parcela -> parcela.getName().toLowerCase().contains(name.toLowerCase()))
+            //        .toList();
             return parcelaRepository.findAllByNameContainingIgnoreCase(name);
         } else {
             return parcelaRepository.findAllByNameContainingIgnoreCaseAndTipoEquals(name, TipoCultivo.valueOf(tipo));
@@ -52,5 +55,12 @@ public class ParcelaServiceImpl implements ParcelaService {
     @Override
     public void deleteParcelById(Long id) {
         parcelaRepository.deleteById(id);
+    }
+
+    @Override
+    public double superficieTotal() {
+        return parcelaRepository.findAll().stream()
+                .mapToDouble(Parcela::getSuperficie)
+                .sum();
     }
 }

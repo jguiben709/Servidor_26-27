@@ -12,4 +12,5 @@ public interface ParcelaService {
     Parcela getParcelById(Long id);
     void saveParcel(Parcela parcela);
     void deleteParcelById(Long id);
+    double superficieTotal();
 }

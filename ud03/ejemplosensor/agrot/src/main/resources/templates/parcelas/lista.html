@@ -61,17 +61,26 @@
                         <td th:text="${parcela.getTipo()}"></td>
                         <td th:text="${parcela.getUbicacion()}"></td>
                         <td>
-                            <a class="btn-solid me-2" th:href="@{/parcels/delete/{id}(id=${parcela.getId()})}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                </svg>
-                            </a>
-                            <a class="btn-solid" th:href="@{/parcels/update/{id}(id=${parcela.getId()})}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-                                </svg>
-                            </a>
+                            <div class="row">
+                                <div class="col-1 me-2">
+                                    <button type="button" class="btn-solid"
+                                            data-bs-toggle="modal" data-bs-target="#modalEliminar"
+                                            th:data-url="@{/parcels/delete/{id}(id=${parcela.getId()})}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <form th:action="@{/parcels/update/{id}(id=${parcela.getId()})}" method="get" class="col-1">
+                                    <button type="submit" class="btn-solid theme-warning" aria-label="Update">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     </tbody>
@@ -80,11 +89,48 @@
             </div>
         </div>
 
-        <footer th:replace="~{fragments/layout :: footer}"></svg>
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
     </main>
 </div>
 
+<!-- MODALES -->
+<!-- La ventana, como fragmento modalEliminar incluido en la base -->
+<div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header"><h1 class="modal-title fs-5">Confirmar
+                eliminación</h1></div>
+            <div class="modal-body">¿Seguro que quieres eliminar <strong
+                    id="modalEliminarNombre"></strong>?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+                <!-- Formulario de eliminación, se rellenará con la URL del elemento a eliminar,
+                y se rellenará el action desde Javascript
+                -->
+                <form id="modalEliminarForm" method="post" action="/parcels/delete/2">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+<script>
+const modalEliminar = document.getElementById('modalEliminar');
+    if (modalEliminar) {
+        modalEliminar.addEventListener('show.bs.modal', (evento) => {
+            // Cuando se muestra el modal, se rellena con los datos del botón que lo activó
+            const boton = evento.relatedTarget;
+            modalEliminar.querySelector('#modalEliminarForm').action = boton.dataset.url;
+        });
+    }
+</script>
 
 <script>
     const caja = document.querySelector('#q');
@@ -94,6 +140,17 @@
         document.querySelector('#resultados').innerHTML = await respuesta.text(); //Spring
     });
 </script>
+</script>
+
+<script>
+    const caja = document.querySelector('#q');
+    caja.addEventListener('input', async () => {
+        //console.log('Buscando...' + caja.value);
+        const respuesta = await fetch('/parcels/find?q=' + encodeURIComponent(caja.value));
+        document.querySelector('#resultados').innerHTML = await respuesta.text(); //Spring
+    });
+</script>
+
 
 
 </body>

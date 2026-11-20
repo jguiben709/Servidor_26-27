@@ -90,7 +90,7 @@ public class ParcelaController {
         return "redirect:/parcels";
     }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteParcela(@PathVariable Long id) {
         parcelaService.deleteParcelById(id);
         return "redirect:/parcels";
