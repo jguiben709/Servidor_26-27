@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity(name = "parcelas")
 @Getter
 @Setter
@@ -33,6 +35,20 @@ public class Parcela {
 
     @NotNull(message = "El tipo de cultivo no puede estar vacío")
     private TipoCultivo tipo;
+
+    @OneToMany(mappedBy = "parcela", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Produccion> producciones;
+
+
+    public void addProduccion(Produccion producccion) {
+        producciones.add(producccion); //No hace la foreignkey
+        producccion.setParcela(this);  //Hace la foreignkey
+    }
+
+    public void removeProduccion(Produccion producccion) {
+        producciones.remove(producccion);
+        producccion.setParcela(null);
+    }
 
 
 

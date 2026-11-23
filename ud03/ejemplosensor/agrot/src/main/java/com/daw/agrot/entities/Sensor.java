@@ -6,6 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 
 @Entity(name = "sensors")
 @Getter
@@ -37,6 +42,12 @@ public class Sensor {
 
     @Column(nullable = true)
     private Double longitud;
+
+    @CreationTimestamp
+    private LocalDateTime creadoEn;
+
+    @UpdateTimestamp
+    private LocalDateTime actualizadoEn;
 
 
 
