@@ -53,6 +53,7 @@
                         <th>TIPO</th>
                         <th>UBICACION</th>
                         <th>SUPERFICIE</th>
+                        <th>ACCIONES</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -60,6 +61,7 @@
                         <td><a th:href="@{/parcels/{id}(id=${parcela.getId()})}" th:text="${parcela.getName()}"></a></td>
                         <td th:text="${parcela.getTipo()}"></td>
                         <td th:text="${parcela.getUbicacion()}"></td>
+                        <td><span th:text="${parcela.getSuperficie()}"></span> m²</td>
                         <td>
                             <div class="row">
                                 <div class="col-1 me-2">
@@ -155,4 +157,3 @@ const modalEliminar = document.getElementById('modalEliminar');
 
 </body>
 </html>
-

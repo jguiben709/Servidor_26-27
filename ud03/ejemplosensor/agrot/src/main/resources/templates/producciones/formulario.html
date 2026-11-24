@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Nueva producción')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="d-flex">
+    <aside th:replace="~{fragments/layout :: sidebar('producciones')}"></aside>
+
+    <main class="app-main flex-grow-1 p-3 p-lg-4">
+        <div th:replace="~{fragments/layout :: header-main('Nueva producción')}"></div>
+
+        <div class="row g-3">
+            <form style="max-width: 400px;" class="p-3 border rounded"
+                  th:action="@{/producciones}" th:object="${produccion}" method="post">
+                <div class="estado-alarma" th:if="${#fields.hasErrors()}">
+                    <p th:each="e : ${#fields.errors()}" th:text="${e}">Error general</p>
+                </div>
+
+                <div class="mb-3 mt-6">
+                    <label for="producto" class="form-label">Producto</label>
+                    <input type="text" class="form-control" id="producto" th:field="*{producto}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="calidad" class="form-label">Calidad</label>
+                    <select class="form-control" id="calidad" th:field="*{calidad}" required>
+                        <option value="">Seleccione una calidad</option>
+                        <option th:each="calidad : ${calidades}"
+                                th:value="${calidad}"
+                                th:text="${calidad}"></option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="parcelaId" class="form-label">Parcela</label>
+                    <select class="form-control" id="parcelaId" name="parcelaId" required>
+                        <option value="">Seleccione una parcela</option>
+                        <option th:each="parcela : ${parcelas}"
+                                th:value="${parcela.id}"
+                                th:text="${parcela.name}"></option>
+                    </select>
+                </div>
+
+                <input type="hidden" th:field="*{id}">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+    </main>
+</div>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

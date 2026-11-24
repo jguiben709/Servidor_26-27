@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Producciones')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="d-flex">
+    <aside th:replace="~{fragments/layout :: sidebar('producciones')}"></aside>
+
+    <main class="app-main flex-grow-1 p-3 p-lg-4">
+        <div th:replace="~{fragments/layout :: header-main('Producciones')}"></div>
+
+        <div class="row g-3">
+            <div class="container mt-3">
+                <div class="d-flex justify-content-end mb-2">
+                    <a th:href="@{/producciones/new}" class="btn-solid theme-success" aria-label="Añadir producción">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>PRODUCTO</th>
+                        <th>CALIDAD</th>
+                        <th>PARCELA</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="produccion : ${producciones}">
+                        <td>
+                            <a th:href="@{/producciones/{id}(id=${produccion.id})}"
+                               th:text="${produccion.producto}"></a>
+                        </td>
+                        <td th:text="${produccion.calidad}"></td>
+                        <td th:text="${produccion.parcela != null ? produccion.parcela.name : '-'}"></td>
+                        <td>
+                            <button type="button" class="btn-solid"
+                                    data-bs-toggle="modal" data-bs-target="#modalEliminar"
+                                    th:data-url="@{/producciones/delete/{id}(id=${produccion.id})}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+    </main>
+</div>
+
+<div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Confirmar eliminación</h1>
+            </div>
+            <div class="modal-body">¿Seguro que quieres eliminar esta producción?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form id="modalEliminarForm" method="post">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+<script>
+    const modalEliminar = document.getElementById('modalEliminar');
+    if (modalEliminar) {
+        modalEliminar.addEventListener('show.bs.modal', (evento) => {
+            modalEliminar.querySelector('#modalEliminarForm').action =
+                evento.relatedTarget.dataset.url;
+        });
+    }
+</script>
+</body>
+</html>
