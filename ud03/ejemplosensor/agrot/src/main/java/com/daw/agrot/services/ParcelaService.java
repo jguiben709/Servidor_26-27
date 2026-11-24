@@ -13,4 +13,5 @@ public interface ParcelaService {
     void saveParcel(Parcela parcela);
     void deleteParcelById(Long id);
     double superficieTotal();
+    void asignarTrabajadorToParcela(Long id, Long trabajadorId, String fechaInicio);
 }

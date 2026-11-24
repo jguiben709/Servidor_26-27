@@ -14,7 +14,7 @@
 
         <div class="row g-3">
 
-            <div class="container mt-4">
+            <div class="container mt-4 row">
                 <div class="card mt-3" style="max-width: 320px;">
                     <div class="card-body">
                         <h4  th:text="${parcela.getName()}" class="card-title"></h4>
@@ -23,7 +23,34 @@
                             <span th:text="${parcela.getSuperficie()}"></span> m²
 
                         </p>
+                        <p class="card-text">
+                            <span th:text="${parcela.getUbicacion()}"></span>
+                        </p>
+                        <hr>
+                        <h5>Producciones</h5>
+                        <ul>
+                            <li th:each="produccion : ${parcela.getProducciones()}"
+                                th:text="${produccion.getProducto()}">
+                        </ul>
                         <a th:href="@{/parcels}" class="btn-outline theme-primary">Volver atrás</a>
+                    </div>
+                </div>
+                <div class="card mt-3" style="max-width: 320px;">
+                    <div class="card-body">
+                        <h4 class="card-title">Trabajadores</h4>
+                        <div class="d-flex justify-content-end mb-2">
+                            <button type="button" class="btn-solid"
+                                    data-bs-toggle="modal" data-bs-target="#modalAsignarTrabajador" aria-label="Confirm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <ul>
+                            <li th:each="pt : ${trabajadoresAsignados}"
+                                th:text="${pt.getTrabajador().getNombre()} + ' - ' + ${pt.getFechaInicio()}">
+                        </ul>
+
                     </div>
                 </div>
             </div>
@@ -35,6 +62,35 @@
 </div>
 
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+
+<!-- MODALES -->
+<!-- La ventana, como fragmento modalEliminar incluido en la base -->
+<div class="modal fade" id="modalAsignarTrabajador" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header"><h1 class="modal-title fs-5">Asignar Trabajador</h1></div>
+            <div class="modal-body">
+                <p>Selecciona un trabajador para asignarlo a esta parcela.</p>
+
+                <form id="modalAsignarTrabajadorForm" method="post" th:action="@{/parcels/{id}/assignTrabajador(id=${parcela.getId()})}">
+                    <div class="mb-3">
+                        <label for="trabajadorId" class="form-label">Trabajador</label>
+                        <select class="form-select" id="trabajadorId" name="trabajadorId" required>
+                            <option value="" disabled selected>Selecciona un trabajador</option>
+                            <option th:each="trabajador : ${trabajadores}" th:value="${trabajador.getId()}" th:text="${trabajador.getNombre()}"></option>
+                        </select>
+                        <input type="date"  class="form-control mt-2" id="fechaInicio" name="fechaInicio" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-danger" form="modalAsignarTrabajadorForm">Asignar</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
 

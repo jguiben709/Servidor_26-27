@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "parcelas")
 @Getter
@@ -39,6 +40,8 @@ public class Parcela {
     @OneToMany(mappedBy = "parcela", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Produccion> producciones;
 
+    @OneToMany(mappedBy = "parcela", cascade = CascadeType.ALL)
+    private List<ParcelaTrabajador> parcelasTrabajador;
 
     public void addProduccion(Produccion producccion) {
         producciones.add(producccion); //No hace la foreignkey

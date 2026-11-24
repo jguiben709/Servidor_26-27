@@ -7,6 +7,7 @@ import com.daw.agrot.entities.TipoCultivo;
 import com.daw.agrot.entities.TipoSensor;
 import com.daw.agrot.services.ParcelaService;
 import com.daw.agrot.services.SensorService;
+import com.daw.agrot.services.TrabajadorService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.*;
 public class ParcelaController {
 
     private final ParcelaService parcelaService;
+    private final TrabajadorService trabajadorService;
 
-    public ParcelaController(ParcelaService parcelaService) {
+    public ParcelaController(ParcelaService parcelaService, TrabajadorService trabajadorService1) {
         this.parcelaService = parcelaService;
+        this.trabajadorService = trabajadorService1;
     }
 
     @GetMapping
@@ -59,6 +62,9 @@ public class ParcelaController {
     public String getParcelaById(@PathVariable Long id, Model model) {
         var parcela = parcelaService.getParcelById(id);
         model.addAttribute("parcela", parcela);
+        model.addAttribute("trabajadores", trabajadorService.getAllTrabajadores());
+        //Sacar los trabajadores asignados a la parcela y pasarlos al modelo
+        model.addAttribute("trabajadoresAsignados", parcela.getParcelasTrabajador());
         return "parcelas/detalle";
     }
 
@@ -94,6 +100,12 @@ public class ParcelaController {
     public String deleteParcela(@PathVariable Long id) {
         parcelaService.deleteParcelById(id);
         return "redirect:/parcels";
+    }
+
+    @PostMapping("/{id}/assignTrabajador")
+    public String asignarTrabajador(@PathVariable Long id, @RequestParam Long trabajadorId, @RequestParam String fechaInicio) {
+        parcelaService.asignarTrabajadorToParcela(id, trabajadorId, fechaInicio);
+        return "redirect:/parcels/" + id;
     }
 
 

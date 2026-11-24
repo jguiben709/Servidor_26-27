@@ -37,7 +37,10 @@
                                th:text="${produccion.producto}"></a>
                         </td>
                         <td th:text="${produccion.calidad}"></td>
-                        <td th:text="${produccion.parcela != null ? produccion.parcela.name : '-'}"></td>
+                        <td>
+                            <a th:href="@{/parcels/{id}(id=${produccion.parcela.id})}"
+                               th:text="${produccion.parcela != null ? produccion.parcela.name : '-'}"></a>
+                        </td>
                         <td>
                             <button type="button" class="btn-solid"
                                     data-bs-toggle="modal" data-bs-target="#modalEliminar"

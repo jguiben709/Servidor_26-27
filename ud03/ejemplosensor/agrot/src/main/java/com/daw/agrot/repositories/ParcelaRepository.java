@@ -15,4 +15,5 @@ public interface ParcelaRepository extends JpaRepository<Parcela, Long> {
     public List<Parcela> findAllByNameContainingIgnoreCaseAndTipoEquals(String name,
                                          TipoCultivo tipo);
 
+
 }
