@@ -47,13 +47,13 @@
                 </div>
 
                 <div class="row g-2">
-                    <div class="md:col">
+                    <div class="col-md">
                         <div class="mb-3">
                             <label for="latitud" class="form-label">Latitud</label>
                             <input type="text" class="form-control" id="latitud" th:field="*{latitud}" required>
                         </div>
                     </div>
-                    <div class="md:col">
+                    <div class="col-md">
                         <div class="mb-3">
                             <label for="longitud" class="form-label">Longitud</label>
                             <input type="text" class="form-control" id="longitud" th:field="*{longitud}" required>
@@ -62,7 +62,7 @@
                 </div>
 
                 <input type="hidden" th:field="*{id}" />
-                <button type="submit" class="btn-primary">Guardar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
             </form>
         </div>
 
