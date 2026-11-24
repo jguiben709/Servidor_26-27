@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Detalle del trabajador')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="d-flex">
+    <aside th:replace="~{fragments/layout :: sidebar('trabajadores')}"></aside>
+
+    <main class="app-main flex-grow-1 p-3 p-lg-4">
+        <div th:replace="~{fragments/layout :: header-main('Detalle del trabajador')}"></div>
+
+        <div class="row g-3">
+            <div class="container mt-4">
+                <div class="card mt-3" style="max-width: 400px;">
+                    <div class="card-body">
+                        <h4 class="card-title"
+                            th:text="${trabajador.nombre + ' ' + trabajador.apellidos}">
+                            Nombre del trabajador
+                        </h4>
+                        <p class="card-text">
+                            <strong>Email:</strong>
+                            <span th:text="${trabajador.email ?: '-'}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Teléfono:</strong>
+                            <span th:text="${trabajador.telefono ?: '-'}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Edad:</strong>
+                            <span th:text="${trabajador.edad ?: '-'}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Salario:</strong>
+                            <span th:text="${trabajador.salario ?: '-'}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Parcelas que ha trabajado:</strong>
+                            <span th:text="${trabajador.getParcelasTrabajador().size() ?: '-'}"></span>
+                        </p>
+                        <a th:href="@{/trabajadores}" class="btn-outline theme-primary">
+                            Volver atrás
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+    </main>
+</div>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

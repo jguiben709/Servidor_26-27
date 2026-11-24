@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Trabajador')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="d-flex">
+    <aside th:replace="~{fragments/layout :: sidebar('trabajadores')}"></aside>
+
+    <main class="app-main flex-grow-1 p-3 p-lg-4">
+        <div th:replace="~{fragments/layout :: header-main('Nuevo trabajador')}"></div>
+
+        <div class="row g-3">
+            <form style="max-width: 400px;" class="p-3 border rounded"
+                  th:action="@{/trabajadores}" th:object="${trabajador}" method="post">
+                <div class="estado-alarma" th:if="${#fields.hasErrors()}">
+                    <p th:each="e : ${#fields.errors()}" th:text="${e}">Error general</p>
+                </div>
+
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre"
+                           th:field="*{nombre}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="apellidos" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" id="apellidos"
+                           th:field="*{apellidos}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email"
+                           th:field="*{email}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono"
+                           th:field="*{telefono}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="edad" class="form-label">Edad</label>
+                    <input type="number" class="form-control" id="edad"
+                           th:field="*{edad}" min="0" step="1">
+                </div>
+
+                <div class="mb-3">
+                    <label for="salario" class="form-label">Salario</label>
+                    <input type="number" class="form-control" id="salario"
+                           th:field="*{salario}" min="0" step="0.01">
+                </div>
+
+                <input type="hidden" th:field="*{id}">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a th:href="@{/trabajadores}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+    </main>
+</div>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
