@@ -112,6 +112,33 @@ body {
   color: var(--app-muted);
   background: #fafbfa;
 }
+.table tbody a:not(.btn) {
+  color: inherit;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--app-border);
+  text-underline-offset: .2em;
+  cursor: pointer;
+}
+.table tbody a:not(.btn):hover,
+.table tbody a:not(.btn):focus-visible {
+  color: var(--app-primary);
+  text-decoration-color: currentColor;
+}
+
+/* ---------- Paginación ---------- */
+.pagination {
+  --bs-pagination-color: var(--app-primary);
+  --bs-pagination-hover-color: var(--app-primary-hover);
+  --bs-pagination-hover-bg: var(--app-primary-soft);
+  --bs-pagination-hover-border-color: var(--app-border);
+  --bs-pagination-focus-color: var(--app-primary);
+  --bs-pagination-focus-bg: var(--app-primary-soft);
+  --bs-pagination-focus-box-shadow: 0 0 0 .2rem rgba(47, 133, 90, .15);
+  --bs-pagination-active-color: var(--app-primary);
+  --bs-pagination-active-bg: var(--app-primary-soft);
+  --bs-pagination-active-border-color: #c6e5d1;
+  --bs-pagination-disabled-color: var(--app-muted);
+}
 
 /* ---------- Estados (sensores, parcelas, lecturas) ---------- */
 .estado {

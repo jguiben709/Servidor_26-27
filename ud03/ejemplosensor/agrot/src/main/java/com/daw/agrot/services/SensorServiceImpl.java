@@ -6,6 +6,8 @@ import com.daw.agrot.entities.TipoSensor;
 import com.daw.agrot.repositories.SensorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,11 +30,11 @@ public class SensorServiceImpl implements SensorService {
     }
 
     @Override
-    public List<Sensor> getAllSensorsByNameAndTipo(String name, String tipo) {
+    public Page<Sensor> getAllSensorsByNameAndTipo(String name, String tipo, Pageable pageable) {
         if (tipo.equals("TODOS")) {
-            return sensorRepository.findAllByNameContainingIgnoreCase(name);
+            return sensorRepository.findAllByNameContainingIgnoreCase(name, pageable);
         } else {
-            return sensorRepository.findAllByNameContainingIgnoreCaseAndTipoEquals(name, TipoSensor.valueOf(tipo));
+            return sensorRepository.findAllByNameContainingIgnoreCaseAndTipoEquals(name, TipoSensor.valueOf(tipo), pageable);
         }
     }
 

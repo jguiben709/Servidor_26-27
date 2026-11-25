@@ -5,6 +5,9 @@ import com.daw.agrot.entities.Sensor;
 import com.daw.agrot.entities.TipoSensor;
 import com.daw.agrot.services.SensorService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,14 +25,20 @@ public class SensorController {
 
     @GetMapping
     public String getAllSensors(@RequestParam (required = false) String q,
-                                @RequestParam(required = false) String tipo, Model model) {
+                                @RequestParam(required = false) String tipo,
+                                @PageableDefault(size = 6, sort = "name", direction = Sort.Direction.ASC)
+                                Pageable pageable,
+                                Model model) {
         //Obtener los sensores
         if (q == null) q = "";
         if (tipo == null) tipo = "TODOS";
 
-        var sensors = sensorService.getAllSensorsByNameAndTipo(q, tipo);
+        //Llamamos al servicio para obtener los sensores filtrados y paginados
+        var sensors = sensorService.getAllSensorsByNameAndTipo(q, tipo, pageable);
+
         //Pasárselos a la vista
         model.addAttribute("sensors", sensors);
+
         var tipos = TipoSensor.values();
         model.addAttribute("tipos", tipos);
         model.addAttribute("q", q);
@@ -44,21 +53,32 @@ public class SensorController {
      * @return
      */
     @GetMapping("/find")
-    public String findAsinc(@RequestParam (required = false) String q, Model model) {
+    public String findAsinc(@RequestParam (required = false) String q,
+                            @RequestParam(required = false) String tipo,
+                            @PageableDefault(size = 6, sort = "name", direction = Sort.Direction.ASC)
+                            Pageable pageable,
+                            Model model) {
 
         if (q == null) q = "";
-        var tipo = "TODOS";
+        if (tipo == null) tipo = "TODOS";
 
-        var sensors = sensorService.getAllSensorsByNameAndTipo(q, tipo);
+        var sensors = sensorService.getAllSensorsByNameAndTipo(q, tipo, pageable);
         model.addAttribute("sensors", sensors);
+        model.addAttribute("q", q);
+        model.addAttribute("tipo", tipo);
         return "sensores/lista :: tabla-sensores";
     }
 
     @GetMapping("/temperatura")
-    public String getAllSensorsTemperatura(Model model) {
-        var sensors = sensorService.getAllSensorsTemperatura();
+    public String getAllSensorsTemperatura(
+            @PageableDefault(size = 10, sort = "name", direction = Sort.Direction.ASC) Pageable pageable,
+            Model model) {
+        var sensors = sensorService.getAllSensorsByNameAndTipo("", TipoSensor.TEMPERATURA.name(), pageable);
         model.addAttribute("sensors", sensors);
         model.addAttribute("titulo", "Sensores de Temperatura");
+        model.addAttribute("q", "");
+        model.addAttribute("tipo", TipoSensor.TEMPERATURA.name());
+        model.addAttribute("tipos", TipoSensor.values());
         return "sensores/lista";
     }
 
@@ -97,7 +117,7 @@ public class SensorController {
         return "redirect:/sensors";
     }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteSensor(@PathVariable Long id) {
         sensorService.deleteSensorById(id);
         return "redirect:/sensors";
