@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequestMapping("/sensors")
 public class SensorController {
@@ -122,6 +124,30 @@ public class SensorController {
         sensorService.deleteSensorById(id);
         return "redirect:/sensors";
     }
+
+
+    @GetMapping("/lecturas/{id}")
+    public String getLecturas(
+            @RequestParam (required = true) Long id,
+            @RequestParam (required = true) LocalDateTime start,
+            @RequestParam (required = true) LocalDateTime end,
+            @PageableDefault(size = 5, sort = "fechaHora", direction = Sort.Direction.DESC)
+            Pageable pageable,
+            Model model) {
+
+        var sensor = sensorService.getSensorById(id);
+        model.addAttribute("sensor", sensor);
+
+        var lecturas = sensorService.findAllLecturasBySensorIdBetweenFechaHora(id, start, end, pageable);
+        model.addAttribute("lecturas", lecturas);
+
+        return "lecturas/lista";
+
+    }
+
+
+
+
 
 
 }

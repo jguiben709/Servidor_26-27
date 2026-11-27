@@ -11,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "sensors")
 @Getter
@@ -49,6 +50,8 @@ public class Sensor {
     @UpdateTimestamp
     private LocalDateTime actualizadoEn;
 
+    @OneToMany(mappedBy = "sensor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Lectura> lecturas;
 
 
 }

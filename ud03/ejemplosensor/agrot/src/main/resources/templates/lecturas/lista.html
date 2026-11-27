@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Panel')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="d-flex">
+    <aside th:replace="~{fragments/layout :: sidebar('dashboard')}"></aside>
+
+    <main class="app-main flex-grow-1 p-3 p-lg-4">
+        <div th:replace="~{fragments/layout :: header-main('Lecturas')}"></div>
+
+        <div class="row g-3">
+
+            <div class="container mt-3">
+
+                <div class="d-flex justify-content-start mb-2">
+                    <h3 th:text="${sensor.getName()}"></h3>
+                </div>
+
+                <div id="resultados-container">
+                    <table id="resultados" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>FECHA</th>
+                            <th>VALOR</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="lectura : ${lecturas.content}">
+                            <td th:text="${lectura.getFechaHora()}"></td>
+                            <td th:text="${lectura.getValor()}"></td>
+                        </tr>
+                        <tr th:unless="${lecturas.hasContent()}">
+                            <td colspan="7">No hay lecturas.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Paginación -->
+                    <nav th:if="${lecturas.totalPages > 1}" class="mt-2">
+                        <ul class="pagination">
+
+                            <li class="page-item" th:classappend="${lecturas.first} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{/lecturas(page=${lecturas.number - 1}, size=${lecturas.size}, q=${q}, tipo=${tipo})}">
+                                    Anterior
+                                </a>
+                            </li>
+
+                            <li class="page-item"
+                                th:each="i : ${#numbers.sequence(0, lecturas.totalPages - 1)}"
+                                th:classappend="${i == lecturas.number} ? 'active'">
+                                <a class="page-link"
+                                   th:href="@{/lecturas(page=${i}, size=${lecturas.size}, q=${q}, tipo=${tipo})}"
+                                   th:text="${i + 1}">1</a>
+                            </li>
+
+                            <li class="page-item" th:classappend="${lecturas.last} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{/lecturas(page=${lecturas.number + 1}, size=${lecturas.size}, q=${q}, tipo=${tipo})}">
+                                    Siguiente
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+    </main>
+</div>
+
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+
+</body>
+</html>

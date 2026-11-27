@@ -1,9 +1,11 @@
 package com.daw.agrot.services;
 
+import com.daw.agrot.entities.Lectura;
 import com.daw.agrot.entities.Sensor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SensorService {
@@ -13,4 +15,6 @@ public interface SensorService {
     List<Sensor> getAllSensorsTemperatura();
     void saveSensor(Sensor sensor);
     void deleteSensorById(Long id);
+    Page<Lectura> findAllLecturasBySensorIdBetweenFechaHora(Long sensorId, LocalDateTime start,
+                                                            LocalDateTime end, Pageable pageable);
 }
