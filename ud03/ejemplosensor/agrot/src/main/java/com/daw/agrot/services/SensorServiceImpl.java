@@ -70,7 +70,12 @@ public class SensorServiceImpl implements SensorService {
     //LECTURAS ----------------------------
     public Page<Lectura> findAllLecturasBySensorIdBetweenFechaHora(Long sensorId, LocalDateTime start,
                                                                    LocalDateTime end, Pageable pageable) {
-        return lecturaRepository.findAllBySensorIdAndFechaHoraBetween(sensorId, start, end, pageable);
+        if (start != null && end != null) {
+            return lecturaRepository.findAllBySensorIdAndFechaHoraBetween(sensorId, start, end, pageable);
+        } else {
+            return lecturaRepository.findAllBySensorId(sensorId, pageable);
+        }
+
     }
 
 

@@ -14,5 +14,7 @@ public interface LecturaRepository extends JpaRepository<Lectura, Long> {
                                                        LocalDateTime fechaHoraBefore,
                                                        Pageable pageable);
 
+    Page<Lectura> findAllBySensorId(Long sensorId, Pageable pageable);
+
 
 }

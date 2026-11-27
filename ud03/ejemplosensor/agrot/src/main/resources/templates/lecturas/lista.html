@@ -15,8 +15,32 @@
 
             <div class="container mt-3">
 
-                <div class="d-flex justify-content-start mb-2">
-                    <h3 th:text="${sensor.getName()}"></h3>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form th:action="@{/sensors/lecturas}" method="get" class="row g-3 align-items-end">
+                            <div class="col-sm-6 col-lg-4">
+                                <label for="start" class="form-label">Fecha inicio</label>
+                                <input type="datetime-local" class="form-control" id="start" name="start" th:value="${#dates.format(start, 'yyyy-MM-ddTHH:mm')}" required />
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <label for="end" class="form-label">Fecha fin</label>
+                                <input type="datetime-local" class="form-control" id="end" name="end" th:value="${#dates.format(end, 'yyyy-MM-ddTHH:mm')}" required />
+                            </div>
+                            <div class="col-sm-4 col-lg-3">
+                                <label for="tipo" class="form-label">Sensor</label>
+                                <select class="form-control" id="tipo" name="tipo">
+                                    <option value="TODOS">Todos</option>
+                                    <option th:each="t : ${sensors}" th:value="${t.getId()}" th:text="${t.getName()}"
+                                            th:selected="${t.toString() == tipo}"></option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-search me-1"></i>Buscar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
                 <div id="resultados-container">
@@ -28,44 +52,48 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="lectura : ${lecturas.content}">
-                            <td th:text="${lectura.getFechaHora()}"></td>
-                            <td th:text="${lectura.getValor()}"></td>
-                        </tr>
-                        <tr th:unless="${lecturas.hasContent()}">
+                        <div th:if ="${lecturas != null}">
+                            <tr th:each="lectura : ${lecturas.content}">
+                                <td th:text="${lectura.getFechaHora()}"></td>
+                                <td th:text="${lectura.getValor()}"></td>
+                            </tr>
+                        </div>
+                        <tr th:unless="${lecturas != null}">
                             <td colspan="7">No hay lecturas.</td>
                         </tr>
                         </tbody>
                     </table>
 
                     <!-- Paginación -->
-                    <nav th:if="${lecturas.totalPages > 1}" class="mt-2">
-                        <ul class="pagination">
+                    <div th:if="${lecturas != null}">
+                        <nav th:if="${lecturas.totalPages > 1}" class="mt-2">
+                            <ul class="pagination">
 
-                            <li class="page-item" th:classappend="${lecturas.first} ? 'disabled'">
-                                <a class="page-link"
-                                   th:href="@{/lecturas(page=${lecturas.number - 1}, size=${lecturas.size}, q=${q}, tipo=${tipo})}">
-                                    Anterior
-                                </a>
-                            </li>
+                                <li class="page-item" th:classappend="${lecturas.first} ? 'disabled'">
+                                    <a class="page-link"
+                                       th:href="@{/sensors/lecturas(id=${sensor.getId()},page=${lecturas.number - 1}, size=${lecturas.size}, start=${start}, end=${end})}">
+                                        Anterior
+                                    </a>
+                                </li>
 
-                            <li class="page-item"
-                                th:each="i : ${#numbers.sequence(0, lecturas.totalPages - 1)}"
-                                th:classappend="${i == lecturas.number} ? 'active'">
-                                <a class="page-link"
-                                   th:href="@{/lecturas(page=${i}, size=${lecturas.size}, q=${q}, tipo=${tipo})}"
-                                   th:text="${i + 1}">1</a>
-                            </li>
+                                <li class="page-item"
+                                    th:each="i : ${#numbers.sequence(0, lecturas.totalPages - 1)}"
+                                    th:classappend="${i == lecturas.number} ? 'active'">
+                                    <a class="page-link"
+                                       th:href="@{/sensors/lecturas(id=${sensor.getId()},page=${i}, size=${lecturas.size}, start=${start}, end=${end})}"
+                                       th:text="${i + 1}">1</a>
+                                </li>
 
-                            <li class="page-item" th:classappend="${lecturas.last} ? 'disabled'">
-                                <a class="page-link"
-                                   th:href="@{/lecturas(page=${lecturas.number + 1}, size=${lecturas.size}, q=${q}, tipo=${tipo})}">
-                                    Siguiente
-                                </a>
-                            </li>
+                                <li class="page-item" th:classappend="${lecturas.last} ? 'disabled'">
+                                    <a class="page-link"
+                                       th:href="@{/sensors/lecturas(id=${sensor.getId()},page=${lecturas.number + 1}, size=${lecturas.size}, start=${start}, end=${end})}">
+                                        Siguiente
+                                    </a>
+                                </li>
 
-                        </ul>
-                    </nav>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
 
             </div>

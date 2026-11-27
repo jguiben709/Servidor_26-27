@@ -126,11 +126,11 @@ public class SensorController {
     }
 
 
-    @GetMapping("/lecturas/{id}")
+    @GetMapping("/lecturas")
     public String getLecturas(
             @RequestParam (required = true) Long id,
-            @RequestParam (required = true) LocalDateTime start,
-            @RequestParam (required = true) LocalDateTime end,
+            @RequestParam (required = false) LocalDateTime start,
+            @RequestParam (required = false) LocalDateTime end,
             @PageableDefault(size = 5, sort = "fechaHora", direction = Sort.Direction.DESC)
             Pageable pageable,
             Model model) {
@@ -138,8 +138,21 @@ public class SensorController {
         var sensor = sensorService.getSensorById(id);
         model.addAttribute("sensor", sensor);
 
+        var sensors = sensorService.getAllSensors();
+        model.addAttribute("sensors", sensors);
+
         var lecturas = sensorService.findAllLecturasBySensorIdBetweenFechaHora(id, start, end, pageable);
         model.addAttribute("lecturas", lecturas);
+
+        return "lecturas/lista";
+
+    }
+
+    @GetMapping("/iniciolecturas")
+    public String getInicioLecturas(Model model) {
+
+        var sensors = sensorService.getAllSensors();
+        model.addAttribute("sensors", sensors);
 
         return "lecturas/lista";
 

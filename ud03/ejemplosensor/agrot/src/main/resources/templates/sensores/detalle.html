@@ -24,15 +24,13 @@
                             <span th:text="${sensor.getLongitud()}"></span>)
                         </p>
                         <p class="card-text">
-                            <small class="text-muted">LECTURAS: <span th:text="${sensor.getLecturas().size()}"></span></small>
+                            <small class="text-muted">
+                                LECTURAS: <span th:text="${sensor.getLecturas().size()}"></span>
+                                <a th:href="@{/sensors/lecturas(id=${sensor.getId()})}" class="btn-outline theme-primary">Ver lecturas</a>
+                            </small>
+
                         </p>
-                        <p class="card-text">
-                            <form method="get" th:action="@{/lecturas/{id}(id=${sensor.getId()})}">
-                                <input type="datetime-local" name="start" th:value="${#dates.format(start, 'yyyy-MM-dd\'T\'HH:mm')}" required />
-                                <input type="datetime-local" name="end" th:value="${#dates.format(end, 'yyyy-MM-dd\'T\'HH:mm')}" required />
-                                <button type="submit" class="btn btn-primary">Ver lecturas</button>
-                            </form>
-                        </p>
+
                         <a th:href="@{/sensors}" class="btn-outline theme-primary">Volver atrás</a>
                     </div>
                 </div>
